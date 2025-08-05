@@ -1,0 +1,119 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Prospection {
+  ID_Prospection BigInt @id // @default(autoincrement())
+  ID_Prospecteur BigInt 
+  date DateTime
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  prospecteur Prospecteur @relation(fields: [ID_Prospecteur], references: [ID_Prospecteur])
+  echantillon Echantillon[]
+}
+
+model Prospecteur {
+  ID_Prospecteur BigInt @id @default(autoincrement())
+  nomProspecteur String
+  prenProspecteur String
+  fonction String
+  email String @unique
+  tel String
+  password String
+
+  prospection Prospection[]
+  producteur Producteur[]
+}
+
+model Producteur {
+  ID_Producteur BigInt @id
+  nomProd String
+  cin Int @unique
+  partenaire String?
+  region String
+  district String
+  commune String
+  fokotany String
+  ID_Prospecteur BigInt
+
+  prospecteur Prospecteur @relation(fields: [ID_Prospecteur], references: [ID_Prospecteur])
+  champs Champs[]
+}
+
+model Champs {
+  ID_Champs BigInt @id 
+  culture String
+  variete String
+  supTotal Float
+  supInfecte Float
+  dateSemi DateTime
+  irrigation String
+  engrai String
+  stadeCroissance String
+  santeGle String
+  nomRavageur String
+  localisation String
+  ID_Producteur BigInt
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  producteur Producteur @relation(fields: [ID_Producteur], references: [ID_Producteur])
+  planteAttaque Plante_Attaque[]
+}
+
+model Plante_Attaque {
+  ID_PlanteAttaque BigInt @id
+  point1 Int
+  point2 Int
+  point3 Int 
+  point4 Int
+  point5 Int
+  tauxInfestation Float
+  ID_Champs BigInt
+
+  champs Champs @relation(fields: [ID_Champs], references: [ID_Champs])
+  partiePlante Partie_Plante[]
+}
+
+model Partie_Plante{
+  ID_PartiePlante BigInt @id
+  partiePlante String
+  ID_PlanteAttaque BigInt
+
+  planteAttaque Plante_Attaque @relation(fields: [ID_PlanteAttaque], references: [ID_PlanteAttaque])
+  symptome Symptome[]
+}
+
+model Symptome{
+  ID_Symptome BigInt @id 
+  description String
+  ID_PartiePlante BigInt
+
+  partiePlante Partie_Plante @relation(fields: [ID_PartiePlante], references: [ID_PartiePlante])
+}
+
+model Echantillon {
+  ID_Echantillon BigInt @id 
+  nature String
+  poids Float
+  nbrEchantillon Int
+  analyseAFaire String
+  ID_Prospection BigInt
+
+  prospection Prospection @relation(fields: [ID_Prospection], references: [ID_Prospection])
+}

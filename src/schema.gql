@@ -1,0 +1,211 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""
+The `BigInt` scalar type represents non-fractional signed whole numeric values.
+"""
+scalar BigInt
+
+"""
+`Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
+"""
+scalar DateTime
+
+type Echantillon {
+  ID_Echantillon: BigInt!
+  nature: String!
+  poids: Float!
+  nbrEchantillon: Float!
+  analyseAFaire: String!
+  ID_Prospection: BigInt!
+  prospection: Prospection!
+}
+
+type Symptome {
+  ID_Symptome: BigInt!
+  description: String!
+  ID_PartiePlante: BigInt!
+  partiePlante: Partie_Plante!
+}
+
+type Partie_Plante {
+  ID_PartiePlante: BigInt!
+  partiePlante: String!
+  ID_PlanteAttaque: BigInt!
+  planteAttaque: Plante_Attaque!
+  symptome: [Symptome!]!
+}
+
+type Plante_Attaque {
+  ID_PlanteAttaque: BigInt!
+  point1: Int!
+  point2: Int!
+  point3: Int!
+  point4: Int!
+  point5: Int!
+  tauxInfestation: Float!
+  ID_Champs: BigInt!
+  champs: Champs!
+  partiePlante: [Partie_Plante!]!
+}
+
+type Champs {
+  ID_Champs: BigInt!
+  culture: String!
+  variete: String!
+  supTotal: Float!
+  supInfecte: Float!
+  dateSemi: DateTime!
+  irrigation: String!
+  engrai: String!
+  stadeCroissance: String!
+  santeGle: String!
+  nomRavageur: String!
+  localisation: String!
+  ID_Producteur: BigInt!
+  producteur: Producteur!
+  planteAttaque: [Plante_Attaque!]!
+}
+
+type Producteur {
+  ID_Producteur: BigInt!
+  nomProd: String!
+  cin: Int!
+  partenaire: String
+  region: String!
+  district: String!
+  commune: String!
+  fokotany: String!
+  ID_Prospecteur: BigInt!
+  prospecteur: Prospecteur!
+  champs: [Champs!]!
+}
+
+type Prospecteur {
+  ID_Prospecteur: BigInt!
+  nomProspecteur: String!
+  prenProspecteur: String!
+  fonction: String!
+  email: String!
+  tel: String!
+  password: String!
+  producteur: [Producteur!]!
+  prospection: [Prospection!]!
+}
+
+type Prospection {
+  ID_Prospection: BigInt!
+  ID_Prospecteur: BigInt!
+  date: DateTime!
+  prospecteur: Prospecteur!
+  echantillon: [Echantillon!]!
+}
+
+type Query {
+  healthCheck: String!
+  champ(id: BigInt!): Champs!
+  champs: [Champs!]!
+
+  prospections: [Prospection!]!
+  prospection(id: BigInt!): Prospection!
+
+  prospecteurs: [Prospecteur!]!
+  prospecteur(id: BigInt!): Prospecteur!
+  prospecteurByEmail(email: String!): Prospecteur
+
+  producteurs: [Producteur!]!
+  producteur(id: BigInt!): Producteur!
+
+  planteAttaques: [Plante_Attaque!]!
+  planteAttaque(id: BigInt!): Plante_Attaque!
+
+  partiePlantes: [Partie_Plante!]!
+  partiePlante(id: BigInt!): Partie_Plante!
+
+  symptomes: [Symptome!]!
+  symptome(id: BigInt!): Symptome!
+
+  echantillons: [Echantillon!]!
+  echantillon(id: BigInt!): Echantillon!
+}
+
+type Mutation {
+  testMutation(input: String!): String!
+
+  # Mutations pour Echantillon
+  createEchantillon(
+    ID_Echantillon: BigInt!
+    nature: String!
+    poids: Float!
+    nbrEchantillon: Float!
+    analyseAFaire: String!
+    ID_Prospection: BigInt!
+  ): Echantillon!
+
+  # Mutations pour Symptome
+  createSymptome(ID_Symptome: BigInt!, description: String!, ID_PartiePlante: BigInt!): Symptome!
+
+  # Mutations pour Partie_Plante
+  createPartiePlante(
+    ID_PartiePlante: BigInt!
+    partiePlante: String!
+    ID_PlanteAttaque: BigInt!
+  ): Partie_Plante!
+
+  # Mutations pour Plante_Attaque
+  createPlanteAttaque(
+    ID_PlanteAttaque: BigInt!
+    point1: Int!
+    point2: Int!
+    point3: Int!
+    point4: Int!
+    point5: Int!
+    tauxInfestation: Float!
+    ID_Champs: BigInt!
+  ): Plante_Attaque!
+
+  # Mutations pour Champs
+  createChamps(
+    ID_Champs: BigInt!
+    culture: String!
+    variete: String!
+    supTotal: Float!
+    supInfecte: Float!
+    dateSemi: DateTime!
+    irrigation: String!
+    engrai: String!
+    stadeCroissance: String!
+    santeGle: String!
+    nomRavageur: String!
+    localisation: String!
+    ID_Producteur: BigInt!
+  ): Champs!
+
+  # Mutations pour Producteur
+  createProducteur(
+    ID_Producteur: BigInt!
+    nomProd: String!
+    cin: Int!
+    partenaire: String
+    region: String!
+    district: String!
+    commune: String!
+    fokotany: String!
+    ID_Prospecteur: BigInt!
+  ): Producteur!
+
+  # Mutations pour Prospecteur
+  createProspecteur(
+    ID_Prospecteur: BigInt!
+    nomProspecteur: String!
+    prenProspecteur: String!
+    fonction: String!
+    email: String!
+    tel: String!
+    password: String!
+  ): Prospecteur!
+
+  # Mutations pour Prospection
+  createProspection(ID_Prospection: BigInt!, ID_Prospecteur: BigInt!, date: DateTime!): Prospection!
+}
