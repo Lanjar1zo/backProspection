@@ -19,21 +19,18 @@ model Prospection {
   ID_Prospecteur BigInt 
   date DateTime
 
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-
   prospecteur Prospecteur @relation(fields: [ID_Prospecteur], references: [ID_Prospecteur])
   echantillon Echantillon[]
 }
 
 model Prospecteur {
   ID_Prospecteur BigInt @id @default(autoincrement())
-  nomProspecteur String
-  prenProspecteur String
+  nomProspecteur String @db.VarChar(100)
+  prenProspecteur String @db.VarChar(100)
   fonction String
   email String @unique
-  tel String
-  password String
+  tel String @db.VarChar(13)
+  password String @db.VarChar(10)
 
   prospection Prospection[]
   producteur Producteur[]
@@ -41,13 +38,13 @@ model Prospecteur {
 
 model Producteur {
   ID_Producteur BigInt @id
-  nomProd String
-  cin Int @unique
-  partenaire String?
-  region String
-  district String
-  commune String
-  fokotany String
+  nomProd String @db.VarChar(100)
+  cin Int @unique 
+  partenaire String? @default("") @db.VarChar(100)
+  region String @db.VarChar(50)
+  district String @db.VarChar(50)
+  commune String @db.VarChar(50)
+  fokotany String @db.VarChar(50)
   ID_Prospecteur BigInt
 
   prospecteur Prospecteur @relation(fields: [ID_Prospecteur], references: [ID_Prospecteur])
@@ -56,21 +53,18 @@ model Producteur {
 
 model Champs {
   ID_Champs BigInt @id 
-  culture String
-  variete String
+  culture String @db.VarChar(100)
+  variete String @db.VarChar(100)
   supTotal Float
   supInfecte Float
   dateSemi DateTime
-  irrigation String
-  engrai String
+  irrigation String @db.VarChar(3)
+  engrai String @db.VarChar(15)
   stadeCroissance String
   santeGle String
-  nomRavageur String
+  nomRavageur String @db.VarChar(100)
   localisation String
   ID_Producteur BigInt
-
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
 
   producteur Producteur @relation(fields: [ID_Producteur], references: [ID_Producteur])
   planteAttaque Plante_Attaque[]
@@ -78,11 +72,11 @@ model Champs {
 
 model Plante_Attaque {
   ID_PlanteAttaque BigInt @id
-  point1 Int
-  point2 Int
-  point3 Int 
-  point4 Int
-  point5 Int
+  point1 Int @db.SmallInt
+  point2 Int @db.SmallInt
+  point3 Int @db.SmallInt
+  point4 Int @db.SmallInt
+  point5 Int @db.SmallInt
   tauxInfestation Float
   ID_Champs BigInt
 
@@ -92,7 +86,7 @@ model Plante_Attaque {
 
 model Partie_Plante{
   ID_PartiePlante BigInt @id
-  partiePlante String
+  partiePlante String @db.VarChar(100)
   ID_PlanteAttaque BigInt
 
   planteAttaque Plante_Attaque @relation(fields: [ID_PlanteAttaque], references: [ID_PlanteAttaque])
@@ -101,7 +95,7 @@ model Partie_Plante{
 
 model Symptome{
   ID_Symptome BigInt @id 
-  description String
+  description String @db.VarChar(200)
   ID_PartiePlante BigInt
 
   partiePlante Partie_Plante @relation(fields: [ID_PartiePlante], references: [ID_PartiePlante])
@@ -109,10 +103,10 @@ model Symptome{
 
 model Echantillon {
   ID_Echantillon BigInt @id 
-  nature String
+  nature String @db.VarChar(100)
   poids Float
-  nbrEchantillon Int
-  analyseAFaire String
+  nbrEchantillon Int @db.SmallInt
+  analyseAFaire String @db.VarChar(25)
   ID_Prospection BigInt
 
   prospection Prospection @relation(fields: [ID_Prospection], references: [ID_Prospection])
