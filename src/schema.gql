@@ -197,7 +197,6 @@ type Mutation {
 
   # Mutations pour Prospecteur
   createProspecteur(
-    ID_Prospecteur: BigInt!
     nomProspecteur: String!
     prenProspecteur: String!
     fonction: String!
