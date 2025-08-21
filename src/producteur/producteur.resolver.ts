@@ -11,7 +11,7 @@ export class ProducteurResolver {
   async createProducteur(
     @Args('ID_Producteur') ID_Producteur: bigint,
     @Args('nomProd') nomProd: string,
-    @Args('cin') cin: number,
+    @Args('cin') cin: bigint,
     @Args('region') region: string,
     @Args('district') district: string,
     @Args('commune') commune: string,

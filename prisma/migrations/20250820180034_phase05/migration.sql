@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Producteur" ALTER COLUMN "cin" SET DATA TYPE VARCHAR(12);

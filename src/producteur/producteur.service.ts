@@ -8,7 +8,7 @@ export class ProducteurService {
   async create(data: {
     ID_Producteur: bigint;
     nomProd: string;
-    cin: number;
+    cin: bigint;
     partenaire?: string | null;
     region: string;
     district: string;

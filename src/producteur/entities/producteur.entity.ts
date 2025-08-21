@@ -12,7 +12,7 @@ export class Producteur {
   nomProd: string;
 
   @Field()
-  cin: number;
+  cin: bigint;
 
   @Field()
   partenaire: string;

@@ -71,7 +71,7 @@ type Champs {
 type Producteur {
   ID_Producteur: BigInt!
   nomProd: String!
-  cin: Int!
+  cin: BigInt!
   partenaire: String
   region: String!
   district: String!
@@ -186,7 +186,7 @@ type Mutation {
   createProducteur(
     ID_Producteur: BigInt!
     nomProd: String!
-    cin: Int!
+    cin: BigInt!
     partenaire: String
     region: String!
     district: String!

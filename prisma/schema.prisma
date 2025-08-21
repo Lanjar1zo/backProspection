@@ -39,7 +39,7 @@ model Prospecteur {
 model Producteur {
   ID_Producteur BigInt @id
   nomProd String @db.VarChar(100)
-  cin Int @unique 
+  cin BigInt @unique
   partenaire String? @default("") @db.VarChar(100)
   region String @db.VarChar(50)
   district String @db.VarChar(50)
